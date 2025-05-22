@@ -1,0 +1,622 @@
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Define CSS Variables for Colors and Spacing */
+:root {
+    --primary-bg: rgb(56, 52, 59);        /* Dark background for navbar, buttons */
+    --primary-text: rgb(225, 194, 194);   /* Light text color for primary-bg */
+    --accent-color: rgb(55, 180, 184);    /* Teal/Cyan for cart icon */
+    --cart-badge-bg: red;                 /* Red for cart amount badge */
+    --cart-badge-text: azure;             /* Azure for cart amount text */
+    --item-border: #eaeaea;               /* Light grey for item borders */
+    --dark-text: #212529;                 /* Dark text for general content */
+    --success-color: #4CAF50;             /* Green for success actions/buttons */
+    --success-hover: #45a049;             /* Darker green for hover */
+    --danger-color: red;                  /* Red for removal actions */
+    --light-grey-bg: #f9f9f9;             /* Light background for sections */
+    --border-light: #eee;                 /* Lighter border for dividers */
+    --font-rubik: 'Rubik', sans-serif;    /* Rubik font definition */
+
+    --spacing-sm: 8px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+}
+
+body {
+    font-family: var(--font-rubik); /* Use the CSS variable */
+    line-height: 1.6; /* Improve readability */
+    color: var(--dark-text); /* Default text color */
+}
+
+/* Improve link and icon interactivity */
+i {
+    cursor: pointer;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Smooth transitions */
+}
+
+a {
+    text-decoration: none;
+    color: inherit; /* Inherit color by default, then override where needed */
+    transition: color 0.2s ease-in-out;
+}
+
+/*
+    ---------------------------------------------
+    Navbar Section
+    ---------------------------------------------
+*/
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    padding: var(--spacing-lg) 60px; /* Using spacing variable */
+    margin-bottom: var(--spacing-xl); /* Using spacing variable */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.navbar h2 {
+    font-weight: 700; /* Assuming Rubik bold variant is used for headings */
+}
+
+.navbar a:hover {
+    color: var(--accent-color); /* Hover effect for Monta Shop link */
+}
+
+.cart {
+    position: relative;
+    background-color: var(--primary-text); /* Use primary-text color */
+    color: var(--accent-color);
+    font-size: 30px;
+    padding: 5px;
+    border-radius: 4px;
+    display: flex; /* Ensure icon and badge align well */
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease-in-out; /* Add transition for hover */
+}
+
+.cart:hover {
+    transform: scale(1.05); /* Slight scale on hover */
+}
+
+.cartAmount {
+    position: absolute;
+    top: -8px; /* Adjusted for better alignment */
+    right: -8px; /* Adjusted for better alignment */
+    font-size: 14px; /* Slightly smaller for compactness */
+    background-color: var(--cart-badge-bg);
+    color: var(--cart-badge-text);
+    padding: 2px 6px; /* Adjusted padding */
+    border-radius: 50%; /* Make it perfectly round */
+    min-width: 20px; /* Ensure it's not too small for single digits */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Subtle shadow */
+}
+
+/*
+    ---------------------------------------------
+    Shop Page / Product Grid
+    ---------------------------------------------
+*/
+.shop {
+    display: grid;
+    /* Using auto-fit and minmax for more flexible responsiveness */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-xl); /* Consistent gap */
+    justify-content: center;
+    margin-bottom: 50px;
+    max-width: 1200px; /* Max width to prevent items from stretching too wide */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 var(--spacing-md); /* Add some horizontal padding for smaller screens */
+}
+
+/* Media queries for more specific control if needed, but auto-fit handles a lot */
+@media (max-width: 768px) {
+    .navbar {
+        padding: var(--spacing-md) var(--spacing-lg); /* Adjust padding for smaller screens */
+    }
+    .shop {
+        gap: var(--spacing-lg); /* Slightly smaller gap on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: var(--spacing-md);
+    }
+}
+
+
+.item {
+    border: 1px solid var(--item-border); /* Slightly thinner border */
+    border-radius: 8px; /* More rounded corners */
+    overflow: hidden; /* Ensures image corners match item */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Soft shadow for depth */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background-color: white;
+}
+
+.item:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Enhanced shadow on hover */
+}
+
+.item img {
+    width: 100%;
+    height: 200px; /* Fixed height for consistent card appearance */
+    object-fit: cover; /* Ensures images fill the space without distortion */
+    border-radius: 8px 8px 0 0; /* Match parent border radius */
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md); /* Consistent padding */
+    gap: var(--spacing-sm); /* Consistent gap */
+}
+
+.details h3 {
+    margin-bottom: 5px; /* Spacing below title */
+    font-size: 1.2em;
+    color: var(--dark-text);
+}
+
+.details p {
+    font-size: 0.9em;
+    color: #666; /* Lighter text for description */
+    margin-bottom: 10px;
+}
+
+.price-quantity {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px; /* Space from description */
+}
+
+.price-quantity h2 {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: var(--dark-text);
+}
+
+/*
+    ---------------------------------------------
+    Shopping Cart Page
+    ---------------------------------------------
+*/
+.shopping-cart {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible cart items */
+    justify-content: center;
+    gap: var(--spacing-md); /* Consistent gap */
+    max-width: 900px; /* Max width for cart items */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 var(--spacing-md);
+}
+
+.cart-item {
+    border: 1px solid var(--dark-text); /* Use dark-text for border */
+    border-radius: 8px; /* More rounded corners */
+    display: flex;
+    align-items: flex-start; /* Align content to the top */
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    position: relative; /* For button group positioning */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
+    background-color: white;
+}
+
+.cart-item img {
+    width: 100px; /* Fixed width for cart item image */
+    height: 100px; /* Fixed height */
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cart-item .details { /* Specific details for cart item */
+    flex-grow: 1; /* Allow details to take available space */
+    padding: 0; /* Remove internal padding as cart-item has it */
+}
+
+
+.title-price-x {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm); /* Space below title-price-x */
+}
+
+.title-price {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.1em;
+}
+
+.cart-item-price {
+    background-color: var(--dark-text);
+    color: white;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-weight: bold;
+}
+
+/* Button Groups */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute; /* Position relative to .cart-item */
+    bottom: var(--spacing-md);
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    padding-top: var(--spacing-sm); /* Add padding for visual separation */
+    border-top: 1px dashed var(--border-light); /* Dashed line for separation */
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 1.1em;
+}
+
+.save-later button {
+    margin-left: auto;
+}
+
+/* Button Styles */
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    font-size: 26px;
+}
+
+.bi-dash-lg {
+    color: var(--danger-color);
+}
+
+.bi-plus-lg {
+    color: var(--success-color);
+}
+
+.bi-x-lg {
+    color: var(--danger-color);
+    font-weight: bold;
+    font-size: 20px; /* Slightly smaller for delete icon */
+}
+.bi-x-lg:hover {
+    transform: scale(1.2); /* Emphasize delete action */
+}
+
+
+.bi-bookmark {
+    color: #4CAF50; /* Specific green for bookmark, can be a variable */
+}
+.bi-bookmark:hover {
+    color: #388E3C; /* Darker green on hover */
+}
+
+.HomeBtn,
+.checkout,
+.removeAll {
+    background-color: var(--dark-text);
+    color: white;
+    border: none;
+    padding: 8px 15px; /* More generous padding */
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1em; /* Consistent font size */
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.HomeBtn:hover,
+.checkout:hover,
+.removeAll:hover {
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.checkout {
+    background-color: var(--success-color);
+}
+.checkout:hover {
+    background-color: var(--success-hover);
+}
+
+.removeAll {
+    background-color: var(--danger-color);
+}
+.removeAll:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+.save-btn {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 6px 12px; /* Adjusted padding */
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.save-btn:hover {
+    background: #e0e0e0;
+    border-color: #ccc;
+}
+
+/*
+    ---------------------------------------------
+    Toast Notifications
+    ---------------------------------------------
+*/
+.toast {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    background: var(--success-color);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md); /* Adjusted padding */
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    animation: fadeIn 0.3s forwards, fadeOut 0.3s 2.5s forwards; /* Increased fadeOut delay */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(var(--spacing-lg)); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(var(--spacing-lg)); }
+}
+
+/*
+    ---------------------------------------------
+    Saved Items Section
+    ---------------------------------------------
+*/
+.saved-section {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--light-grey-bg);
+    border-radius: 8px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--spacing-lg);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.saved-list {
+    margin-top: var(--spacing-md);
+}
+
+.saved-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+.saved-item:last-child {
+    border-bottom: none; /* No border for the last item */
+}
+
+
+.saved-item img {
+    width: 60px; /* Slightly larger saved item image */
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.saved-item-info {
+    flex-grow: 1; /* Allow info to take space */
+}
+
+.saved-item-info h4 {
+    margin: 0 0 5px 0;
+    color: var(--dark-text);
+}
+
+.saved-item button {
+    margin-left: auto;
+    background: var(--success-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.saved-item button:hover {
+    background: var(--success-hover);
+}
+
+/*
+    ---------------------------------------------
+    Checkout Page
+    ---------------------------------------------
+*/
+.text-center {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.checkout-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--spacing-lg); /* Consistent padding */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+.checkout-summary {
+    background: var(--light-grey-bg);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    height: fit-content;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
+}
+
+.checkout-form {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--dark-text);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color), 0.2);
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.checkout-btn {
+    background: var(--success-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.checkout-btn:hover {
+    background: var(--success-hover);
+    transform: translateY(-2px);
+}
+
+#checkout-items {
+    margin: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: var(--spacing-md);
+}
+
+.checkout-item { /* Re-used for summary display */
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-light);
+    align-items: center; /* Align items in summary */
+}
+.checkout-item:last-child {
+    border-bottom: none;
+}
+
+.checkout-item span:last-child {
+    font-weight: bold;
+    color: var(--dark-text);
+}
+
+/* Total breakdown styling */
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.95em;
+}
+
+.grand-total {
+    font-weight: bold;
+    font-size: 1.2em; /* Slightly larger for emphasis */
+    border-top: 1px solid #ddd;
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    color: var(--dark-text);
+}
+
+/* Specific styling for the checkout button as a link/button */
+a.checkout, button.checkout {
+    display: inline-block; /* Ensure they behave like block elements for sizing */
+    background-color: var(--success-color);
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+a.checkout:hover, button.checkout:hover {
+    background-color: var(--success-hover);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.checkout-btn.checkout { /* Override general .checkout-btn if needed for specific use cases */
+    width: auto;
+    display: inline-block;
+    margin-top: 0;
+}
+
+/* Final responsive adjustments for checkout */
+@media (max-width: 768px) {
+    .checkout-container {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        padding: var(--spacing-md);
+    }
